@@ -3,3 +3,4 @@ import-ipynb
 configparser
 torch
 langchain
+pinecone-client
