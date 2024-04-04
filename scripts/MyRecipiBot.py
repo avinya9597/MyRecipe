@@ -11,31 +11,40 @@
 # In[24]:
 
 
-import datetime
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.vectorstores import Pinecone
 import streamlit as st
 from Recipe_LangChain import build_query_chain
+from pinecone import Pinecone
+
 
 from sentence_transformers import SentenceTransformer
 import torch
+import os
+import configparser
 
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-# In[33]:
+api_token = config['credentials']['api_token']
+pinecone_key = config['credentials']['pinecone_key']
+host_name = config['credentials']['host_name']
+pinecone_indexname = config['credentials']['pinecone_indexname']
 
-
-index_name = os.environ(pinecone_indexname)
-API_KEY= os.environ(pinecone_key)
+print("API Token:", api_token)
+print("Pinecone Key:", pinecone_key)
+print("Host Name:", host_name)
+print("Pinecone Index Name:", pinecone_indexname)
 ENVIRONMENT = 'gcp-starter'
-pc = Pinecone(api_key= API_KEY, environment = ENVIRONMENT)
-myindex = pc.Index(host= os.environ(host_name)
+pc = Pinecone(api_key= pinecone_key, environment = ENVIRONMENT)
+myindex = pc.Index(host= host_name)
 
 
 # In[34]:
 
 
-token = os.environ(api_token)
+token = api_token
 llm = OpenAI(temperature=0.0, api_key=token)
 
 
